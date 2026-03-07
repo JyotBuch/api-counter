@@ -17,7 +17,7 @@ app.post('/increment', (req, res) => {
 });
 
 app.post('/reset', (req, res) => {
-  count = 0;
+  count = 1 ;
   res.json({ count });
 });
 
