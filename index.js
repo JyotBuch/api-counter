@@ -16,6 +16,11 @@ app.post('/increment', (req, res) => {
   res.json({ count });
 });
 
+app.post('/reset', (req, res) => {
+  count = 0;
+  res.json({ count });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Running on ${PORT}`));
 
