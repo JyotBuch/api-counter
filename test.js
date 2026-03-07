@@ -33,3 +33,23 @@ const server = app.listen(4000, () => {
     req.end();
   }, 300);
 });
+
+// Test 3: reset
+setTimeout(() => {
+  const req = http.request({
+    hostname: 'localhost', port: 4000,
+    path: '/reset', method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  }, (res) => {
+    let data = '';
+    res.on('data', c => data += c);
+    res.on('end', () => {
+      const body = JSON.parse(data);
+      console.assert(body.count === 0, '❌ reset failed');
+      console.log('✅ /reset passes');
+      server.close();
+      process.exit(0);
+    });
+  });
+  req.end();
+}, 600);
