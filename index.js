@@ -4,7 +4,7 @@ app.use(express.json());
 
 let count = 0;
 
-app.get('/health', (req, res) => res.json({ status: 'ok' }));
+app.get('/healthz', (req, res) => res.json({ status: 'ok' }));
 app.get('/count', (req, res) => res.json({ count }));
 
 app.post('/increment', (req, res) => {
