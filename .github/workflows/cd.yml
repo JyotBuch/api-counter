@@ -1,0 +1,24 @@
+name: CD
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build -t counter-api:latest .
+          docker build -t counter-api:${{ github.sha }} .
+
+      - name: Smoke test the container
+        run: |
+          docker run -d -p 3000:3000 --name test-container counter-api:latest
+          sleep 3
+          curl -f http://localhost:3000/health
+          docker stop test-container
+          echo "✅ Container healthy — ready to deploy"
